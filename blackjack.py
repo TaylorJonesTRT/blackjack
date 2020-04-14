@@ -1,5 +1,6 @@
 import random
 import os
+import sys
 
 
 # TODO: Create functions for staying, hitting, busting, winning, showing hands
@@ -47,37 +48,49 @@ def starting_hands():
           " Value: ", value(dealer_hand))
 
 
-def hit():
+def player_turn():
+    while value(player_hand) < 21:
+        action = input("Would you like to (H)it or (S)tand?")
+        if action == 'H':
+            player_hand.append(cards.pop())
+            print("Your hand is now: ", '-'.join(player_hand),
+                  " Value: ", value(player_hand))
+        elif action == 'S':
+            break
+
+
+def dealer_turn():
     pass
 
 
-def stay():
-    pass
+def player_bust():
+    while value(player_hand) > 21:
+        print("Sorry but you have busted and lost, try again next time!")
+        continue
 
 
-def bust():
+def dealer_bust():
     pass
 
 
 # starting_hands()
+first_time = True
 
 while True:
-    first_time = True
-    if first_time is True:
-        print("Welcome to the game of Blackjack! If you wish you can play a game against the dealer")
-        print("Would you like to play? (y)es or (n)o")
+    print("Welcome to the game of Blackjack! If you wish you can play a game against the dealer")
+    print("Would you like to play? (y)es or (n)o")
 
-        choice = input()
+    choice = input()
 
-        if choice == 'y':
-            first_time = False
-            print("Here are the starting hands...")
-            starting_hands()
+    if choice == 'y' and first_time is True:
+        first_time = False
+        starting_hands()
+        print(first_time)
+        player_turn()
 
-            input(
-                "Looking at the value of your cards, would you like to hit or stay, player? ")
+    elif first_time is False:
+        break
 
-            if input == 'hit' or 'Hit':
-                player_hand.append(cards.pop())
-                print('Player Hand: ', '-'.join(player_hand),
-                      " Value: ", value(player_hand))
+    elif choice == 'n':
+        print("See you next time!")
+        sys.exit()
