@@ -46,51 +46,63 @@ def starting_hands():
           " Value: ", value(player_hand))
     print('Dealer Hand: ', '-'.join(dealer_hand),
           " Value: ", value(dealer_hand))
+    return player_hand, dealer_hand
 
 
 def player_turn():
-    while value(player_hand) < 21:
-        action = input("Would you like to (H)it or (S)tand?")
-        if action == 'H':
-            player_hand.append(cards.pop())
-            print("Your hand is now: ", '-'.join(player_hand),
-                  " Value: ", value(player_hand))
-        elif action == 'S':
-            break
+    player_action = input("Would you like to (H)it or (S)tand?")
+    if player_action == 'H' or 'h' or 'Hit' or 'hit' or 'HIT':
+        player_hand.append(cards.pop())
+        print("Your hand is now: ", '-'.join(player_hand),
+              " Value: ", value(player_hand))
+
+    elif player_action == 'S' or 's' or 'Sit' or 'sit' or 'SIT':
+        print("Player is standing, it's now the Dealers turn!")
 
 
 def dealer_turn():
-    pass
+    while value(dealer_hand) < 17:
+        dealer_hand.append(cards.pop())
+        print("The Dealers hand is now: ", "-".join(dealer_hand),
+              " Value: ", value(dealer_hand))
 
 
 def player_bust():
-    while value(player_hand) > 21:
-        print("Sorry but you have busted and lost, try again next time!")
-        continue
+    print("Sorry but you have busted and lost, try again next time!")
 
 
 def dealer_bust():
     pass
 
 
-# starting_hands()
-first_time = True
+def player_win():
+    pass
 
-while True:
-    print("Welcome to the game of Blackjack! If you wish you can play a game against the dealer")
-    print("Would you like to play? (y)es or (n)o")
 
-    choice = input()
+def dealer_win():
+    pass
 
-    if choice == 'y' and first_time is True:
-        first_time = False
+
+def main():
+    wins = 0
+    losses = 0
+    ties = 0
+
+    print("WELCOME TO THE GAME OF BLACKJACK")
+    print("Instructions: Get as close to 21 as possible without going over")
+
+    while True:
+        print("Here are your starting hands")
         starting_hands()
-        print(first_time)
-        player_turn()
+        while value(player_hand) < 21:
+            player_turn()
+            if value(player_hand) > 21:
+                player_bust()
+                losses = losses + 1
+                break
+        else:
+            print("Thank you for playing, have a great day!")
+            break
 
-    elif first_time is False:
-        break
 
-    elif choice == 'n':
-        print("See you next time!")
-        sys.exit()
+main()
