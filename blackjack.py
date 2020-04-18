@@ -1,14 +1,12 @@
 import random
-import os
 import sys
 
 
-# TODO: Create functions for staying, hitting, busting, winning, showing hands
-# TODO: Create the logic for the dealers hand on having the dealer decide by himself if he wants to hit or stay and have them
-# TODO: defined as functions.
+# TODO: Create functions for staying, hitting, busting, winning, showing hands, dealer decisions
 # TODO: Add a betting function that lets the player keep playing until they run out of chips
 
 # TODO: Maybe think of a better way to determine the value of an Ace card
+# TODO: Add in a mechanism to count wins, losses, and ties.
 
 
 cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'] * 4
@@ -35,22 +33,6 @@ def value(hands):
 def shuffle_cards():
     random.shuffle(cards)
     return cards
-
-
-# def player_hit():
-#     player_hand.append(cards.pop())
-#     print('Player Hand: ', '-'.join(player_hand),
-#           " Value: ", value(player_hand))
-
-
-# def bust():
-#     decision = input(
-#         "Sorry but you busted and have lost the game. Would you like to play again? (y/n)")
-#     if decision == 'y':
-#         return False
-#     else:
-#         print("Have a great day and thanks for playing!")
-#         sys.exit()
 
 
 def play():
@@ -111,32 +93,44 @@ def play():
                       " Value: ", value(dealer_hand), "\n")
                 break
 
-        if value(player_hand) > value(dealer_hand):
-            print("You beat the dealer! Congrats")
-            new_game = input("Would you like to play again? (y/n)")
-            if new_game == 'y':
+        if value(dealer_hand) > 21:
+            decision = input(
+                "The Dealer has busted and you have won! Would you like to play again? (y/n)")
+
+            if decision == 'y':
                 continue
+
             else:
-                print("Thanks for playing! See you next time!")
+                print("Thank you for playing! I hope to see you again next time!")
                 sys.exit()
 
-        elif value(player_hand) < value(dealer_hand):
-            print("The dealer has beaten you :(. Better luck next time!")
-            new_game2 = input("Would you like to play again? (y/n)")
-            if new_game2 == 'y':
-                continue
-            else:
-                print("Thanks for playing! See you next time!")
-                sys.exit()
+        while value(player_hand) < 21 and value(dealer_hand) < 21:
+            if value(player_hand) > value(dealer_hand):
+                print("You beat the dealer! Congrats")
+                new_game = input("Would you like to play again? (y/n)")
+                if new_game == 'y':
+                    continue
+                else:
+                    print("Thanks for playing! See you next time!")
+                    sys.exit()
 
-        elif value(player_hand) == value(dealer_hand):
-            print("You have tied with the dealer!")
-            new_game3 = input("Would you like to play again? (y/n)")
-            if new_game3 == 'y':
-                continue
-            else:
-                print("Thanks for playing! See you next time!")
-                sys.exit()
+            elif value(player_hand) < value(dealer_hand):
+                print("The dealer has beaten you :(. Better luck next time!")
+                new_game2 = input("Would you like to play again? (y/n)")
+                if new_game2 == 'y':
+                    continue
+                else:
+                    print("Thanks for playing! See you next time!")
+                    sys.exit()
+
+            elif value(player_hand) == value(dealer_hand):
+                print("You have tied with the dealer!")
+                new_game3 = input("Would you like to play again? (y/n)")
+                if new_game3 == 'y':
+                    continue
+                else:
+                    print("Thanks for playing! See you next time!")
+                    sys.exit()
 
 
 play()
