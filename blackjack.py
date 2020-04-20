@@ -4,11 +4,13 @@ import sys
 
 # TODO: Create functions for staying, hitting, busting, winning, showing hands, dealer decisions
 # TODO: Add a betting function that lets the player keep playing until they run out of chips
-
 # TODO: Maybe think of a better way to determine the value of an Ace card
 # TODO: Add in a mechanism to count wins, losses, and ties.
 
 
+# Determining the value of the cards in the deck.
+# If you have an Ace in your hands it's value (1 or 11) will be automatically determined depnding on the value of your hand
+# if the card was not there. So if your hand value is greater than 11 then an Ace will be a value of 1 otherwise it will be 11.
 def value(hands):
     value = 0
     k = len(hands)
