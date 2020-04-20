@@ -9,9 +9,6 @@ import sys
 # TODO: Add in a mechanism to count wins, losses, and ties.
 
 
-cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'] * 4
-
-
 def value(hands):
     value = 0
     k = len(hands)
@@ -29,21 +26,20 @@ def value(hands):
     return value
 
 
-def shuffle_cards():
-    random.shuffle(cards)
-    return cards
-
-
 def play():
     while True:
+        cards = ['2', '3', '4', '5', '6', '7',
+                 '8', '9', '10', 'J', 'Q', 'K', 'A'] * 4
         player_hand = []
         dealer_hand = []
+
+        # Shuffle the deck of cards so that it's always random
+        random.shuffle(cards)
 
         print(
             "WELCOME TO THE GAME OF BLACKJACK! TRY TO BEAT THE DEALER TO WIN HIS MONEY!")
         print("INSTRUCTIONS: GET THE CLOSEST TO 21 WITHOUT GOING OVER\n")
         print("Let's get started! Here are the starting hands!")
-        shuffle_cards()
         player_hand.append(cards.pop())
         dealer_hand.append(cards.pop())
         player_hand.append(cards.pop())
@@ -93,22 +89,22 @@ def play():
                 break
 
         if value(dealer_hand) > 21:
-            decision = input(
+            decision2 = input(
                 "The Dealer has busted and you have won! Would you like to play again? (y/n)")
 
-            if decision == 'y':
+            if decision2 == 'y':
                 continue
 
             else:
                 print("Thank you for playing! I hope to see you again next time!")
                 sys.exit()
 
-        while value(player_hand) < 21 and value(dealer_hand) < 21:
+        while value(player_hand) <= 21 and value(dealer_hand) <= 21:
             if value(player_hand) > value(dealer_hand):
                 print("You beat the dealer! Congrats")
                 new_game = input("Would you like to play again? (y/n)")
                 if new_game == 'y':
-                    continue
+                    break
                 else:
                     print("Thanks for playing! See you next time!")
                     sys.exit()
@@ -117,7 +113,7 @@ def play():
                 print("The dealer has beaten you :(. Better luck next time!")
                 new_game2 = input("Would you like to play again? (y/n)")
                 if new_game2 == 'y':
-                    continue
+                    break
                 else:
                     print("Thanks for playing! See you next time!")
                     sys.exit()
@@ -126,10 +122,12 @@ def play():
                 print("You have tied with the dealer!")
                 new_game3 = input("Would you like to play again? (y/n)")
                 if new_game3 == 'y':
-                    continue
+                    break
                 else:
                     print("Thanks for playing! See you next time!")
                     sys.exit()
+
+        continue
 
 
 play()
