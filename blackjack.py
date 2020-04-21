@@ -83,7 +83,7 @@ def play():
                 print('Dealer Hand: ', '-'.join(dealer_hand),
                       " Value: ", value(dealer_hand), "\n")
 
-            elif value(dealer_hand) >= 17:
+            elif value(dealer_hand) > 17:
                 print(
                     "The Dealer is wishing to stand now! Here is his hand and value as it is!")
                 print('Dealer Hand: ', '-'.join(dealer_hand),
